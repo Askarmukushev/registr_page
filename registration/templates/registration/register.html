@@ -50,10 +50,13 @@
                 <h4 class="card-title text-center mb-4 mt-1">Регистрация</h4>
                 <form method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {% for field in form %}
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+                        <label for="{{ field.id_for_label }}" class="text-white">{{ field.label }}</label>
+                        <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" {% if field.value %}value="{{ field.value|stringformat:'s' }}"{% endif %}>
                     </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
                 </form>
             </article>
         </div>
